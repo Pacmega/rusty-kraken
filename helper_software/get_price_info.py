@@ -33,6 +33,10 @@ def get_price_info(pair, interval, since):
           + '&interval=' + str(interval) \
           + '&since=' + str(since)
     price_data = requests.get(url).json()
+    if len(price_data['error']) > 0:
+        print('Error occurred on request: ' + str(price_data['error']))
+        sleep(2)
+        price_data = get_price_info(pair, interval, since)
     return price_data
 
 for pair in all_pairs:
